@@ -17,8 +17,8 @@ export default class App extends Component {
                 {label: 'I need a break...', important: false, id: 'pcmd'}
             ]
         };
-
         this.deleteItem = this.deleteItem.bind(this);
+        this.addItem = this.addItem.bind(this);
     }
 
     deleteItem(id) {
@@ -33,7 +33,24 @@ export default class App extends Component {
     }
 
     addItem(body) {
-        console.log(body)
+        const abc = "abcdefghijklmnopqrstuvwxyz0123456789";
+        let newId = '';
+        while (newId.length < 4) {
+            newId += abc[Math.floor(Math.random() * abc.length)];
+        }
+        
+        const newItem = {
+            label: body,
+            important: false,
+            id: newId
+        };
+
+        this.setState(({data}) => {
+            const newArr = [...data, newItem];
+            return {
+                data: newArr
+            }
+        });
     }
 
     render() {
