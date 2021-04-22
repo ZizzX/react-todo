@@ -33,12 +33,12 @@ export default class App extends Component {
     }
 
     addItem(body) {
-        const abc = "abcdefghijklmnopqrstuvwxyz0123456789";
+        const abc = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         let newId = '';
         while (newId.length < 4) {
             newId += abc[Math.floor(Math.random() * abc.length)];
         }
-        
+
         const newItem = {
             label: body,
             important: false,
