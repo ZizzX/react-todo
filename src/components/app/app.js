@@ -56,7 +56,17 @@ export default class App extends Component {
     }
 
     onToggleImportant(id) {
-        console.log(id);
+        this.setState(({data}) => {
+            const index = data.findIndex(elem => elem.id === id);
+            const old = data[index];
+            const newItem = {...old, important: !old.important };
+            const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
+
+            return {
+                data : newArr
+            }
+            
+        });
     }
 
     onToggleLiked(id) {
@@ -64,9 +74,16 @@ export default class App extends Component {
     }
 
     render() {
+        const {data} = this.state;
+        const importantPost = data.filter((elem) => elem.important).length;
+        const allPosts = data.length;
+
         return(
             <div className="app">
-                 <AppHeader/>
+                 <AppHeader
+                 important={importantPost}
+                 allPosts={allPosts}
+                 />
                  <div className="search-panel d-flex">
                      <SearchPanel/>
                      <PostStatusFilter/>
