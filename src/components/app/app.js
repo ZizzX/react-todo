@@ -44,6 +44,7 @@ export default class App extends Component {
         const newItem = {
             label: body,
             important: false,
+            like: false,
             id: newId
         };
 
@@ -65,23 +66,31 @@ export default class App extends Component {
             return {
                 data : newArr
             }
-            
         });
     }
 
     onToggleLiked(id) {
-        console.log(id);
+        this.setState(({data}) => {
+            const index = data.findIndex(elem => elem.id === id);
+            const old = data[index];
+            const newItem = {...old, like: !old.like };
+            const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
+
+            return {
+                data : newArr
+            }
+        });
     }
 
     render() {
         const {data} = this.state;
-        const importantPost = data.filter((elem) => elem.important).length;
+        const likedPost = data.filter((elem) => elem.like).length;
         const allPosts = data.length;
 
         return(
             <div className="app">
                  <AppHeader
-                 important={importantPost}
+                 likedPost={likedPost}
                  allPosts={allPosts}
                  />
                  <div className="search-panel d-flex">
